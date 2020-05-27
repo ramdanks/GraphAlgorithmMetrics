@@ -1,4 +1,6 @@
-#define PUBLIC
+//#define LOG_CORE
+#define LOG_CPU		//Don't Define this if Wanna Calculate RealTimePerformance ( Only for Testing )
+#define LOG_MEM		//This Macros Doesn't affect RealTimePerformance ( Ok For Real )
 
 #include "Ramdan/Log.h"
 #include "Ramdan/Timer.h"
@@ -179,6 +181,10 @@ int main()
 
 	RandomizeGraph( graph, vertices, edges );
 	
+#ifdef LOG_CPU
+	system( "Pause" );
+#endif
+
 	if ( GraphSelect == DFS || GraphSelect == ALL )
 	{
 		LOG_WARN( "Starting Depth First Search!" );
@@ -189,6 +195,11 @@ int main()
 		LOG_NOHEAD( "%d\n", Graph::DFS_Traversal_Count );
 		LOG_OK( Log.GetDurStr().c_str() );
 	}
+	
+#ifdef LOG_CPU
+	system( "Pause" );
+#endif
+
 	if ( GraphSelect == BFS || GraphSelect == ALL )
 	{
 		LOG_WARN( "Starting Breadth First Search!" );

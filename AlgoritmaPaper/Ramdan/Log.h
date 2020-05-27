@@ -65,7 +65,7 @@ namespace Ramdan
 }
 
 //core log macros
-#ifndef PUBLIC
+#ifdef  LOG_CORE
 #define LOG_CORE_NOHEAD(...)          printf(__VA_ARGS__)
 #define LOG_CORE_CLEAR(...)		      printf("\r                               \r");
 #define LOG_CORE_TRACE(...)           Ramdan::Log::get_core()->trace(__VA_ARGS__)
@@ -115,3 +115,20 @@ namespace Ramdan
 #define LOG_BAD_INLINE(...)           Ramdan::Log::get_client()->bad(__VA_ARGS__, false)
 #define LOG_FATAL_INLINE(...)         Ramdan::Log::get_client()->fatal(__VA_ARGS__, false)
 #define LOG_NEWLINE()			      std::cout << std::endl
+
+#ifdef LOG_CPU
+#include "CPUMetrics.h"
+#define LOG_CPU()					  Sleep( 250 ); s_CPUMetrics.GetCPULoad()
+#define BENCH_CPU()					  Sleep( 250 ); s_CPUMetrics.BenchCPU()
+#define GET_BENCH_RESULT(...)	      Sleep( 250 ); s_CPUMetrics.GetBenchCPU(__VA_ARGS__)
+#define RESET_BENCH()				  Sleep( 250 ); s_CPUMetrics.ResetBench()
+#else
+
+#endif
+
+#ifdef LOG_MEM
+#include "AllocationMetrics.h"
+#define LOG_MEM()					  PrintMemoryUsage()
+#else
+#define LOG_MEM()
+#endif

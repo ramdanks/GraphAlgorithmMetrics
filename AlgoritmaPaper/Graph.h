@@ -2,7 +2,6 @@
 #include <iostream> 
 #include <list> 
 #include <iterator>
-#include "AllocationMetrics.h"
 #include "Ramdan/Log.h"
 
 class Graph
@@ -77,6 +76,7 @@ void Graph::BFS( int s, int target )
 {
     LOG_MEM();
     LOG_CORE_TRACE( "Traversal: ", false );
+
     // Mark all the vertices as not visited 
     bool *visited = new bool[V];
     for ( int i = 0; i < V; i++ )
@@ -88,8 +88,6 @@ void Graph::BFS( int s, int target )
     visited[s] = true;
     queue.push_back( s );
 
-    // 'i' will be used to get all adjacent 
-    // vertices of a vertex 
     std::list<int>::iterator i;
     while ( !queue.empty() )
     {
